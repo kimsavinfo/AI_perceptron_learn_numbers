@@ -1,0 +1,15 @@
+#content-container{
+    min-height: 640px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#logMessage {
+    font: bold;
+    font-size: 1.2em;
+    padding: 20px;
+}
+
+.top-buffer {
+    margin-top:30px;
+}

@@ -1,0 +1,536 @@
+<!-- ================================================================================
+Auteur : Kim SAVAROCHE
+Date : 26/11/2014
+
+Subject :
+	User interface to play with the perceptron
+	and learn it how to recognize numbers
+================================================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MLP - Numbers</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <script src="js/jquery-1.11.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Slider -->
+    <script src="js/bootstrap-slider.js"></script>
+    <link href="css/bootstrap-slider.css" rel="stylesheet">
+
+    <link href="css/perceptron.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav" id="menu">
+            <a href="index.html" class="blog-nav-item active">MLP Numbers</a>
+            <a href="mlp.html" class="blog-nav-item">Multiple Layer Perceptron tests</a>
+            <a href="unit_tests.html" class="blog-nav-item">Unit tests</a>
+        </nav>
+    </div>
+</div>
+
+<div id="content-container" class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <canvas id="userCanvas" height="500" width="300">
+                alternate content
+            </canvas>
+        </div>
+
+        <div class="col-md-8">
+            <div class="row top-buffer">
+                <div class="col-md-2">
+                    Pixel Size :
+                </div>
+                <div class="col-md-4">
+                    <input id="pixelSize"
+                           data-slider-id='ex1Slider' type="text"
+                           data-slider-min="10" data-slider-max="100"
+                           data-slider-step="1" data-slider-value="50"/>
+                </div>
+
+                <div class="col-md-2">
+                    Learning Rate :
+                </div>
+                <div class="col-md-4">
+                    <input id="learninRate"
+                           data-slider-id='ex1Slider' type="text"
+                           data-slider-min="0.1" data-slider-max="1.0"
+                           data-slider-step="0.1" data-slider-value="0.3"/>
+                </div>
+            </div>
+
+            <div class="row top-buffer">
+                <div class="col-md-2">
+                    Max Error :
+                </div>
+                <div class="col-md-4">
+                    <input id="maxError"
+                           data-slider-id='ex1Slider' type="text"
+                           ddata-slider-min="0.00001" data-slider-max="0.050"
+                           data-slider-step="0.0001" data-slider-value="0.001"/>
+                </div>
+
+                <div class="col-md-2">
+                    Max Iterations :
+                </div>
+                <div class="col-md-4">
+                    <input id="maxIterations"
+                           data-slider-id='ex1Slider' type="text"
+                           data-slider-min="1001" data-slider-max="100001"
+                           data-slider-step="1" data-slider-value="10001"/>
+                </div>
+            </div>
+
+            <div class="row top-buffer">
+                <div class="col-md-2">
+                    Training Ratio :
+                </div>
+                <div class="col-md-4">
+                    <input id="trainingRatio"
+                           data-slider-id='ex1Slider' type="text"
+                           data-slider-min="0.5" data-slider-max="1.0"
+                           data-slider-step="0.01" data-slider-value="1.0"/>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="form-horizontal row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-primary" onclick="saveSettings()">
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                Save settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        You can either  <span class="alert-warning" role="alert"><b>learn automatically</b></span>
+                        the ten classic numbers [0 ; 9] :
+                        <button class="btn btn-warning" onclick="learnAuto()">
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                            Let's study
+                        </button>
+                        please wait ~ 3 secondes
+                        <br/>
+                        ( please see "<a href="mlp.html">Multiple Layer Perceptron tests</a>"
+                        to run multiple times and check unit tests )
+                    </p>
+                </div>
+            </div>
+            <div class="form-horizontal row">
+                <div class="col-md-5 control-label">OR learn one by one :</div>
+                <div class="col-md-2 inputContainer">
+                    <input id="numberToLearn" class="form-control"/>
+                </div>
+                <button class="btn btn-primary" onclick="learnNumber()">
+                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                    Learn
+                </button>
+            </div>
+
+            <hr>
+
+            <div class="form-group">
+                <div class="form-horizontal row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-primary" onclick="clearCanvas()">
+                            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                            Clear canvas
+                        </button>
+
+                        <button class="btn btn-primary" onclick="showPreview()">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            Preview
+                        </button>
+
+                        <button class="btn btn-primary disabled" id="recogniseNumberButton" onclick="recogniseNumber()">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            Eurêka !
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <canvas id="previewCanvas" height="250" width="150">
+                        alternate content
+                    </canvas>
+                </div>
+                <div class="col-md-6">
+                    <p id="dialogueNumberRecognised">
+                        Nothing is drawn
+                    </p>
+                    <p>
+                        <button class="btn btn-success" onclick="incrementRight()">
+                            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                            Well done !
+                            <p id="nbRight">
+                                0
+                            </p>
+                        </button>
+                        <button class="btn btn-danger" onclick="incrementWrong()">
+                            Too bad...
+                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                            <p id="nbWrong">
+                                0
+                            </p>
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2 class="text-center"><b><u>Perceptron information :</u></b></h2>
+
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            <div id="neuralNetworkLog">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <table id="neuralNetworkHiddenWeights" class="table table-hover">
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table id="neuralNetworkOutputWeights" class="table table-hover">
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="blog-footer">
+    <p>
+        Kim SAVAROCHE : <a href="mailto:kimsavinfo@gmail.com">kimsavinfo@gmail.com</a>
+    </p>
+</footer>
+
+
+<script type="text/javascript">
+    var sliderLearninRate = new Slider("#learninRate", {
+        tooltip: 'always'
+    });
+    var sliderPixelSize = new Slider("#pixelSize", {
+        tooltip: 'always'
+    });
+    var sliderMaxError = new Slider("#maxError", {
+        tooltip: 'always'
+    });
+    var sliderMaxIterations = new Slider("#maxIterations", {
+        tooltip: 'always'
+    });
+    var sliderTrainingRatio = new Slider("#trainingRatio", {
+        tooltip: 'always'
+    });
+</script>
+
+<!-- =================================================================================
+    JS FOR PERCEPTRON
+=================================================================================-->
+<script src="models/matrix.js"></script>
+<script src="lib/maths.js"></script>
+<script src="lib/user_canvas.js"></script>
+<script src="lib/preview_canvas.js"></script>
+<script src="models/mlp/data_point.js"></script>
+<script src="models/mlp/data_collection.js"></script>
+<script src="models/mlp/neuron.js"></script>
+<script src="models/mlp/neural_network.js"></script>
+<script src="models/mlp/neural_system.js"></script>
+
+<script type="text/javascript">
+
+    var listInputsArray = [];
+    var listOutputArray = [];
+    var trainingRatio = $("#trainingRatio").val();
+    var learningRate = $("#learninRate").val();
+    var maxError = $("#maxError").val();
+    var maxIterations = $("#maxIterations").val();
+
+    var neuralSystem  = new NeuralSystem(15, 10, 1, listInputsArray, listOutputArray, 1.0);
+    neuralSystem.learnWithTrainingPoints();
+
+    function showPreview()
+    {
+        var nbLinesPixels = userPixels.length;
+        var nbColumnsPixels = userPixels[0].length;
+
+        var matrixTmp = new Matrix(nbLinesPixels, nbColumnsPixels);
+        for(var y = 0; y < nbLinesPixels; y++)
+        {
+            for(var x = 0; x < nbColumnsPixels; x++)
+            {
+                matrixTmp.values[y][x] = userPixels[y][x] ? 1 : 0;
+            }
+        }
+        matrixTmp.minimizeFromCanvas();
+
+        previewMatrix = matrixTmp;
+        drawPreviewMatrix();
+    }
+
+    function recogniseNumber()
+    {
+        showPreview();
+        var inputsArray = getPreviewMatrix1N();
+        var numberRecognised = neuralSystem.getRecognisedNumber(inputsArray);
+
+        var dialogueNumberRecognised = document.getElementById("dialogueNumberRecognised");
+        dialogueNumberRecognised.innerHTML = "Is it a <b>"+numberRecognised+"</b> ? " +
+                "<br/> OutputRate :"+neuralSystem.getOutputRate(inputsArray);
+    }
+
+    function learnNumber()
+    {
+        var numberToLearn = parseInt($("#numberToLearn").val());
+
+        if(!Number.isInteger(numberToLearn) || numberToLearn < 0 || numberToLearn > 9)
+        {
+            alert("The number must be an integer beetween 0 and 9");
+        }
+        else
+        {
+            $("#numberToLearn").val(numberToLearn);
+
+            showPreview();
+            var inputsArray = getPreviewMatrix1N();
+            listInputsArray.push(inputsArray);
+            listOutputArray.push([numberToLearn / 10]);
+
+            learn(false);
+        }
+    }
+
+    function learnAuto()
+    {
+        listInputsArray.push(
+            [1,1,1,1,0,1,1,0,1,1,0,1,1,1,1],
+            [1,1,1,1,0,1,1,0,1,1,1,1,0,0,0],
+            [1,1,1,1,0,1,1,1,1,0,0,0,0,0,0],
+
+            [0,0,1,0,0,1,0,0,1,0,0,1,0,0,1],
+            [0,0,1,0,0,1,0,0,1,0,0,1,0,0,0],
+            [0,0,1,0,0,1,0,0,1,0,0,0,0,0,0],
+            [0,0,1,0,0,1,0,0,0,0,0,0,0,0,0],
+
+            [1,1,1,0,0,1,1,1,1,1,0,0,1,1,1],
+
+            [1,1,1,0,0,1,1,1,1,0,0,1,1,1,1],
+
+            [1,0,0,1,0,0,1,1,1,0,0,1,0,0,1],
+            [1,0,0,1,0,1,1,1,1,0,0,1,0,0,1],
+            [1,0,1,1,0,1,1,1,1,0,0,1,0,0,1],
+
+            [1,1,1,1,0,0,1,1,1,0,0,1,1,1,1],
+
+            [1,1,1,1,0,0,1,1,1,1,0,1,1,1,1],
+            [1,1,0,1,0,0,1,1,1,1,0,1,1,1,1],
+            [1,0,0,1,0,0,1,1,1,1,0,1,1,1,1],
+            [0,0,0,1,0,0,1,1,1,1,0,1,1,1,1],
+
+            [1,1,1,0,0,1,0,0,1,0,0,1,0,0,1],
+            [1,1,1,0,0,1,0,1,1,0,0,1,0,0,1],
+
+            [1,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
+
+            [1,1,1,1,0,1,1,1,1,0,0,1,0,0,1],
+            [1,1,1,1,0,1,1,1,1,0,0,1,0,1,1],
+            [1,1,1,1,0,1,1,1,1,0,0,1,1,1,1]
+        );
+        listOutputArray.push(
+            [0.0],
+            [0.0],
+            [0.0],
+
+            [0.1],
+            [0.1],
+            [0.1],
+            [0.1],
+
+            [0.2],
+
+            [0.3],
+
+            [0.4],
+            [0.4],
+            [0.4],
+
+            [0.5],
+
+            [0.6],
+            [0.6],
+            [0.6],
+            [0.6],
+
+            [0.7],
+            [0.7],
+
+            [0.8],
+
+            [0.9],
+            [0.9],
+            [0.9]
+        );
+
+        learn(true);
+    }
+
+    function learn(isAuto)
+    {
+        neuralSystem  = new NeuralSystem(15, 10, 1, listInputsArray, listOutputArray, trainingRatio);
+        neuralSystem.learningRate =  learningRate;
+        neuralSystem.maxError = maxError;
+        neuralSystem.maxIterations = maxIterations;
+        neuralSystem.learnWithTrainingPoints();
+
+        if(neuralSystem.Log_iIteration < neuralSystem.maxIterations) {
+            refreshPerceptronInfo();
+            allowRecogniseNumber();
+
+            if(!isAuto)
+                recogniseNumber();
+            else
+                alert("Numbers learned");
+        }
+        else
+            alert("I think I have a headache. Perhaps we should play with the settings...");
+    }
+
+    function refreshPerceptronInfo()
+    {
+        refreshLog();
+        refreshNeuralNetworkHiddenWeights();
+        refreshNeuralNetworkOutputWeights();
+    }
+
+    function refreshLog()
+    {
+        var modalBody = document.getElementById("neuralNetworkLog");
+        modalBody.innerHTML = neuralSystem.getLog();
+    }
+
+    function refreshNeuralNetworkHiddenWeights()
+    {
+        var table = document.getElementById("neuralNetworkHiddenWeights");
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+        var header;
+        header =   "<tr>" +
+                "<th>Hidden Neurons</th>" +
+                "<th>Weights</th>" +
+                "</tr>";
+        table.innerHTML += header;
+
+        var row;
+        for(var iHidden = 0; iHidden < neuralSystem.nbHidden; iHidden++)
+        {
+            for(var iInput = 0; iInput <= neuralSystem.nbInputs; iInput++)
+            {
+                row =   "<tr>" +
+                        "<td>Number " + iHidden;
+
+                if(iInput == neuralSystem.nbInputs)
+                    row += " (biais)";
+
+                row +=      "</td>" +
+                        "<td>" + neuralSystem.network.hiddenNeurons[iHidden].weights[iInput] + "</td>" +
+                        "</tr>";
+
+                table.innerHTML += row;
+            }
+        }
+    }
+
+    function refreshNeuralNetworkOutputWeights()
+    {
+        var table = document.getElementById("neuralNetworkOutputWeights");
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+        var header;
+        header =   "<tr>" +
+                "<th>Output Neurons</th>" +
+                "<th>Weights</th>" +
+                "</tr>";
+        table.innerHTML += header;
+
+        var row;
+        for(var iOutput = 0; iOutput < neuralSystem.nbOutputs; iOutput++)
+        {
+            for(var iHidden = 0; iHidden <= neuralSystem.nbHidden; iHidden++)
+            {
+                row =   "<tr>" +
+                        "<td>Number " + iOutput;
+
+                if(iHidden == neuralSystem.nbHidden)
+                    row += " (biais)";
+
+                row +=      "</td>" +
+                        "<td>" + neuralSystem.network.hiddenNeurons[iOutput].weights[iHidden] + "</td>" +
+                        "</tr>";
+
+                table.innerHTML += row;
+            }
+        }
+    }
+
+    function allowRecogniseNumber()
+    {
+        $("#recogniseNumberButton").removeClass("disabled");
+    }
+
+
+    function incrementRight()
+    {
+        var nbRightInput = document.getElementById("nbRight");
+        var nbRight = nbRightInput.innerHTML;
+        nbRightInput.innerHTML =  ++nbRight;
+    }
+
+    function incrementWrong()
+    {
+        var nbWrongInput = document.getElementById("nbWrong");
+        var nbWrong = nbWrongInput.innerHTML;
+        nbWrongInput.innerHTML =  ++nbWrong;
+    }
+
+    function clearCanvas()
+    {
+        resetUserCanvas();
+        clearPreviewCanvas();
+    }
+
+    function saveSettings()
+    {
+        resetUserCanvas();
+
+        trainingRatio = $("#trainingRatio").val();
+        learningRate = $("#learninRate").val();
+        maxError = $("#maxError").val();
+        maxIterations = $("#maxIterations").val();
+    }
+
+</script>
+
+</body>
+</html>

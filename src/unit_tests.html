@@ -1,0 +1,67 @@
+<!-- ================================================================================
+Auteur : Kim SAVAROCHE
+Date : 14/12/2014
+
+Subject :
+	Test class previewMatrix
+================================================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MLP - Unit Tests</title>
+    <link rel="stylesheet" href="test/lib/qunit-1.16.0.css">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <link href="css/perceptron.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav" id="menu">
+            <a href="index.html" class="blog-nav-item">MLP Numbers</a>
+            <a href="mlp.html" class="blog-nav-item">Multiple Layer Perceptron tests</a>
+            <a href="unit_tests.html" class="blog-nav-item active">Unit tests</a>
+        </nav>
+    </div>
+</div>
+
+<div id="content-container" class="container">
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="test/lib/qunit-1.16.0.js"></script>
+
+    <script src="lib/maths.js"></script>
+    <script src="test/test_maths.js"></script>
+
+    <script src="models/matrix.js"></script>
+    <script src="test/test_matrix.js"></script>
+    <script src="test/test_matrix_crop.js"></script>
+    <script src="test/test_matrix_thinning.js"></script>
+    <script src="test/test_matrix_shave.js"></script>
+    <script src="test/test_matrix_minimize.js"></script>
+
+</div>
+
+<footer class="blog-footer">
+    <p>
+        Kim SAVAROCHE : <a href="mailto:kimsavinfo@gmail.com">kimsavinfo@gmail.com</a>
+    </p>
+</footer>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.1.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

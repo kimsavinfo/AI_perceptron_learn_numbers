@@ -1,0 +1,146 @@
+<!-- ================================================================================
+Auteur : Kim SAVAROCHE
+Date : 27/12/2014
+
+Subject :
+	Multiple Layer Perceptron
+================================================================================ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MLP - Neurons Tests</title>
+    <link rel="stylesheet" href="test/lib/qunit-1.16.0.css">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/blog.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <![endif]-->
+    <link href="css/perceptron.css" rel="stylesheet">
+
+    <script src="lib/maths.js"></script>
+    <script src="test/lib/qunit-1.16.0.js"></script>
+    <script src="models/mlp/data_point.js"></script>
+    <script src="models/mlp/data_collection.js"></script>
+    <script src="models/mlp/neuron.js"></script>
+    <script src="models/mlp/neural_network.js"></script>
+    <script src="models/mlp/neural_system.js"></script>
+</head>
+<body>
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav" id="menu">
+            <a href="index.html" class="blog-nav-item">MLP Numbers</a>
+            <a href="mlp.html" class="blog-nav-item active">Multiple Layer Perceptron tests</a>
+            <a href="unit_tests.html" class="blog-nav-item">Unit tests</a>
+        </nav>
+    </div>
+</div>
+
+
+<div id="content-container" class="container">
+    <h4>
+        This section's main goal is to show the perceptron's performance.
+        <br/><br/>
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        Please note that if the number of iteration needed to learn is equals to the limit of max iterations
+        then some tests won't be correct as the perceptron would need more iterations to learn.
+        <br/><br/>
+        Please don't hesitate to rerun "1.NeuralSystem check numbers learned : ]0;9]"
+        to be aware of the precision and the speed of this MLP.
+    </h4>
+
+    <div class="row">
+        <div class="col-md-4">
+            1 :
+            <img src="imgs/1_0.png" alt="1_0" height="50" width="50">
+            <img src="imgs/1_1.png" alt="1_1" height="50" width="50">
+            <img src="imgs/1_2.png" alt="1_2" height="50" width="50">
+            <img src="imgs/1_3.png" alt="1_3" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            2 :
+            <img src="imgs/2_0.png" alt="2_0" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            3 :
+            <img src="imgs/3_0.png" alt="3_0" height="50" width="50">
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            4 :
+            <img src="imgs/4_0.png" alt="4_0" height="50" width="50">
+            <img src="imgs/4_1.png" alt="4_1" height="50" width="50">
+            <img src="imgs/4_2.png" alt="4_2" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            5 :
+            <img src="imgs/5_0.png" alt="5_0" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            1 :
+            <img src="imgs/6_0.png" alt=6_0" height="50" width="50">
+            <img src="imgs/6_1.png" alt=6_1" height="50" width="50">
+            <img src="imgs/6_2.png" alt=6_2" height="50" width="50">
+            <img src="imgs/6_3.png" alt=6_3" height="50" width="50">
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            7 :
+            <img src="imgs/7_0.png" alt="7_0" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            8 :
+            <img src="imgs/8_0.png" alt="8_0" height="50" width="50">
+        </div>
+        <div class="col-md-4">
+            9 :
+            <img src="imgs/9_0.png" alt=9_0" height="50" width="50">
+            <img src="imgs/9_1.png" alt=9_1" height="50" width="50">
+            <img src="imgs/9_2.png" alt=9_2" height="50" width="50">
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-lg-offset-4 col-md-4">
+            0 :
+            <img src="imgs/0_0.png" alt="0_0" height="50" width="50">
+            <img src="imgs/0_1.png" alt="0_1" height="50" width="50">
+            <img src="imgs/0_2.png" alt="0_2" height="50" width="50">
+        </div>
+    </div>
+
+    <div id="logMessage">
+        <p><u>Log Results :</u></p>
+    </div>
+
+    <div class="container">
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+
+        <script src="test/test_mlp.js"></script>
+
+    </div>
+</div>
+
+
+<footer class="blog-footer">
+    <p>
+        Kim SAVAROCHE : <a href="mailto:kimsavinfo@gmail.com">kimsavinfo@gmail.com</a>
+    </p>
+</footer>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.1.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
